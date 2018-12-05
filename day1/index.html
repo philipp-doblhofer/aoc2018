@@ -9,17 +9,34 @@
 <head>
 </head>
 <body>
-	<textarea placeholder="Input ..." id="input"></textarea>
-	<div id="result"></div>
+	<textarea placeholder="Input ..." id="input"></textarea><br/>
+	Part 1: <span id="result"></span><br/>
+	Part 2: <span id="result_part2"></span>
 	<script>
 	$(function() {
 		$('#input').change(function() {
 			var result = 0;
+			var frequencies = [0];
 			var lines = $(this).val().split("\n");
+			$('#result').html("");
+			$('#result_part2').html("");
+			
 			$.each(lines, function(i){
 				result += parseInt(lines[i]);
 			});
 			$('#result').html(result);
+			
+			
+			result = 0;
+			while($('#result_part2').html() == "") {
+				$.each(lines, function(i){
+					result += parseInt(lines[i]);
+					if($('#result_part2').html() == "" && $.inArray(result, frequencies) != -1) {
+						$('#result_part2').html(result);
+					}
+					frequencies.push(result);
+				});
+			}
 		});
 	});	
 	</script>
