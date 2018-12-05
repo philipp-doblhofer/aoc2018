@@ -11,6 +11,7 @@
 <body>
 	<textarea placeholder="Input ..." id="input"></textarea><br/>
 	Part 1: <span id="result"></span><br/>
+	Part 2: <span id="result_part2"></span><br/>
 	<script>
 	
 	$(function() {
@@ -21,13 +22,14 @@
 			var coords = tmp2[0].split(',');
 			var dim = tmp2[1].split('x');
 			
-			return {x1: parseInt(coords[0]), y1: parseInt(coords[1]), x2: parseInt(coords[0])+parseInt(dim[0]), y2: parseInt(coords[1])+parseInt(dim[1])};
+			return {id: tmp[0], overlapped: false, x1: parseInt(coords[0]), y1: parseInt(coords[1]), x2: parseInt(coords[0])+parseInt(dim[0]), y2: parseInt(coords[1])+parseInt(dim[1])};
 		}
 	
 		$('#input').change(function() {
 			var result = 0;
 			var data = [];
 			var map = [];
+			var mapId = [];
 			var lines = $(this).val().split("\n");
 			
 			var max_x = 0;
@@ -53,14 +55,24 @@
 					for(y=tmp_data.y1; y<tmp_data.y2; y++) {
 						if(map[parseInt(x*max_x + y)] == undefined) {
 							map[parseInt(x*max_x + y)] = 1;
+							mapId[parseInt(x*max_x + y)] = [i];
 						} else { 
 							map[parseInt(x*max_x + y)]++;
+							mapId[parseInt(x*max_x + y)].push(i);
 						}
 					}
 				}
 			});
 			
 			$('#result').html(map.filter(x => x >= 2).length);
+			
+			$.each(mapId.filter(x => x.length >= 2), function(i, k) {
+				$.each(k, function(j) {
+					data[k[j]].overlapped = true;
+				});
+			});
+			
+			$('#result_part2').html(data.filter(x => x.overlapped == false)[0].id);
 		});
 	});	
 	</script>
