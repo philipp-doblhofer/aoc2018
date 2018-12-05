@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js transparent"><head><meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<head>
+</head>
+<body>
+	<textarea placeholder="Input ..." id="input"></textarea>
+	<div id="result"></div>
+	<script>
+	$(function() {
+		$('#input').change(function() {
+			var result = 0;
+			var lines = $(this).val().split("\n");
+			$.each(lines, function(i){
+				result += parseInt(lines[i]);
+			});
+			$('#result').html(result);
+		});
+	});	
+	</script>
+</body>
+</html>
