@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js transparent"><head><meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<head>
+</head>
+<body>
+	<textarea placeholder="Input ..." id="input"></textarea><br/>
+	Part 1: <span id="result"></span><br/>
+	<script>
+	$(function() {
+		$('#input').change(function() {
+			var result = 0;
+			var frequencies = [0];
+			var lines = $(this).val().split("\n");
+			$('#result').html("");
+			
+			var count2 = 0;
+			var count3 = 0;
+			$.each(lines, function(i){
+				var line = lines[i];
+				var count2_tmp = 0;
+				var count3_tmp = 0;
+				$.each(line.split(""), function(j){
+					var count = (line.match(new RegExp(line[j], 'g')) || []).length;
+					if(count==2) {
+						count2_tmp = 1;
+					} else if(count==3) {
+					 	count3_tmp = 1;
+					}	
+				});
+				count2 += count2_tmp;
+				count3 += count3_tmp;
+			});
+			$('#result').html(count2 + " * " + count3 + " = " + (count2*count3));
+		});
+	});	
+	</script>
+</body>
+</html>
+
