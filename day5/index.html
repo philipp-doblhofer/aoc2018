@@ -11,6 +11,7 @@
 <body>
 	<textarea placeholder="Input ..." id="input"></textarea><br/>
 	Part 1: <span id="result"></span><br/>
+	Part 2: <span id="result_part2"></span>
 	<script>
 	
 	$(function() {
@@ -30,9 +31,8 @@
 			}
 			return ret;
 		}
-	
-		$('#input').change(function() {
-			var line = $(this).val();
+		
+		function reducePolymere(line) {
 			while(1) {
 				var line_tmp = processPolymeres(line);
 				if(line_tmp == line) {
@@ -41,7 +41,30 @@
 				}
 				line = line_tmp;
 			}
+			return line;
+		}
+		
+		function getTypes(line) {
+			var chars = line.toLowerCase().split("");
+			return Array.from(new Set(chars));
+		}
+	
+		$('#input').change(function() {
+			var line = $(this).val();
+			line=reducePolymere(line);
 			$('#result').html(line.length);
+			
+			var min = line.length;
+			var line = $(this).val();
+			$.each(getTypes(line), function(i, k) {
+				var line_tmp = line.replace(new RegExp(k, 'ig'), '');
+				var tmp = reducePolymere(line_tmp);
+				if(tmp.length < min) {
+					min = tmp.length;
+				}
+				
+			});
+			$('#result_part2').html(min);
 		});
 	});	
 	</script>
